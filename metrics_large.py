@@ -51,6 +51,8 @@ def evaluate(model_paths, test_sets, correct_color=False):
         per_view_dict_polytopeonly[scene_dir] = {}
 
         test_dir = Path(scene_dir) / test_set
+        if not os.path.exists(test_dir):
+            os.makedirs(test_dir)
 
         for method in os.listdir(test_dir):
             try:

@@ -42,6 +42,7 @@
 	"postCreateCommand": ".devcontainer/post_create.sh",
 	"remoteUser": "root",
 	"mounts": [
-		"source=/home/marc/Datasets/colmap_mount,target=/workspaces/CityGaussian/data,type=bind,consistency=cached",
+		"source=/home/haubenstock/data/colmap_mount/,target=/workspaces/CityGaussian/data,type=bind,consistency=cached",
+		"source=/home/haubenstock/data/colmap_mount/output/,target=/workspaces/CityGaussian/output,type=bind,consistency=cached",
 	]
 }
