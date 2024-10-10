@@ -5,6 +5,7 @@ torchvision==0.15.2
 torchaudio==2.0.2
 splines==0.3.0
 plyfile==0.8.1
+numpy==1.26.2
 tensorboard
 wandb
 tqdm
