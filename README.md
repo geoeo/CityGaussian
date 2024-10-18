@@ -32,6 +32,10 @@ The advancement of real-time 3D scene reconstruction and novel view synthesis ha
 </div>
 
 ## 📰 News
+**[2024.10.12]** Checkpoints on main datasets have been released!
+
+**[2024.10.11]** Updates FAQ! If you are stucked, please first check whether it can solves the problem.
+
 **[2024.08.20]** Updates [Custom Dataset Instructions](doc/custom_dataset.md)! 
 
 **[2024.08.05]** Our code is now available! Welcome to try it out!
@@ -56,7 +60,13 @@ This repository contains the official implementation of the paper ["CityGaussian
 Note that the configs for five large-scale scenes: MatrixCity, Rubble, Building, Residence and Sci-Art has been prepared in `config` folder. Data of these datasets can be prepared according to [Data Preparation](doc/data_preparation.md). For COLMAP, we recommend to directly use our generated results:
 
 - **Google Drive**: https://drive.google.com/file/d/1Uz1pSTIpkagTml2jzkkzJ_rglS_z34p7/view?usp=sharing
+- **Hugging Face**: https://huggingface.co/datasets/dylanebert/CityGaussian
 - **Baidu Netdisk**: https://pan.baidu.com/s/1zX34zftxj07dCM1x5bzmbA?pwd=1t6r
+
+### Checkpoints
+Please download from:
+- **Hugging Face**: https://huggingface.co/TeslaYang123/CityGaussian
+- **Baidu Netdisk**: https://pan.baidu.com/s/1a9C8xgAQmQy86FvO9XXBFQ?pwd=cxlr 
 
 ### Installation
 #### a. Clone the repository
@@ -140,7 +150,9 @@ python viewer.py config/rubble_c9_r4_lod.yaml
 - \[x\] Release CityGaussian code.
 - \[x\] Release ColMap results of main datasets.
 - \[x\] Release detailed instruction for custom dataset usage.
-- \[ \] Release checkpoints on main datasets.
+- \[x\] Release checkpoints on main datasets.
+
+
 
 ## 📄 License
 
@@ -162,3 +174,12 @@ If you find this repository useful, please use the following BibTeX entry for ci
 ## 👏 Acknowledgements
 
 This repo benefits from [3DGS](https://github.com/graphdeco-inria/gaussian-splatting), [LightGaussian](https://github.com/VITA-Group/LightGaussian), [Gaussian Lightning](https://github.com/yzslab/gaussian-splatting-lightning). Thanks for their great work!
+
+## ❓ FAQ
+- _No available GPU or only single GPU can be used for parallel training._ This may due to lack of enough memory on the GPU. `get_available_gpu()` function in the script will only return GPU id with occupied memory less than 500M. You can rise the `mem_threshold` to 5000(M) for a looser start condition. Another way is to simply kill unnecessary progress.
+
+- _Out of memory occurs in training._ For block_all of MatrixCity aerial view, we noticed that it may cost memory more than 24G when fine-tuning specific blocks. To finish training with limited VRAM, downsampling images or adjusting max_cache_num (we used a rather large 1024) in train_large.py can be a useful practice. This problem will be resolved in our coming V2 version.
+
+- _Generation of COLMAP results._ We use the ground-truth poses offered by datasets and separately match the train and test sets. And this will be faster and more robust than match from scratch. But indeed it still costs a lot of time.
+
+- _Most blocks are not trained._ The main reason here is the data assigned to most blocks are too few (<50), and to prevent overfitting these blocks won't get trained. This can be attributed to unreasonable aabb setting, please try to adjust it and see if things work.
